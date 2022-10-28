@@ -2,9 +2,6 @@
   "name": "ts-lib-temp",
   "private": true,
   "description": "",
-  "module": "dist/index.es.js",
-  "main": "dist/index.cjs.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
@@ -30,15 +27,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wangkaiwd/typescript-library-template.git"
+    "url": "git+https://github.com/wangkaiwd/mini-vite.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wangkaiwd/typescript-library-template/issues"
-  },
-  "homepage": "https://github.com/wangkaiwd/typescript-library-template#readme",
+  "homepage": "https://github.com/wangkaiwd/mini-vite#readme",
   "dependencies": {
     "prompts": "^2.4.2"
   },
