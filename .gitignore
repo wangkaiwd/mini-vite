@@ -1,0 +1,15 @@
+.idea/*
+.vscode
+.nyc_output
+build
+dist
+node_modules
+test
+packages/vite/src/**.js
+coverage
+*.log
+yarn.lock
+/website/uploads
+# Output of 'npm pack'
+*.tgz
+.eslintcache
