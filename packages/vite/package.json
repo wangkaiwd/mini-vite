@@ -6,6 +6,9 @@
     "build-bundle": "rimraf dist && rollup -c --configPlugin typescript",
     "build": "pnpm build-bundle && rimraf dist/types"
   },
+  "bin": {
+    "svite": "./bin/vite.js"
+  },
   "description": "",
   "module": "dist/index.es.js",
   "main": "dist/index.cjs.js",

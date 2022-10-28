@@ -8,7 +8,7 @@ import path from "path";
 import { fileURLToPath } from "node:url";
 import pkg from "./package.json" assert { type: "json" };
 
-const external = [...Object.keys(pkg.devDependencies)];
+const external = [...Object.keys(pkg.dependencies)];
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,6 +31,7 @@ const createOutput = (isDev: boolean) => {
   return output;
 };
 
+// todo: generate chunk bundle
 export default (commandArgs: any): RollupOptions[] => {
   const isDev = !!commandArgs.watch;
   const isProd = !isDev;
