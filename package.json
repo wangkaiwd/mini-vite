@@ -34,6 +34,7 @@
   "license": "MIT",
   "homepage": "https://github.com/wangkaiwd/mini-vite#readme",
   "dependencies": {
+    "fs-extra": "^10.1.0",
     "prompts": "^2.4.2"
   },
   "devDependencies": {
@@ -44,11 +45,14 @@
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "8.3.3",
     "@sppk/vite": "workspace:*",
+    "@types/fs-extra": "^9.0.13",
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.11.0",
+    "@types/prompts": "^2.4.1",
     "@types/semver": "^7.3.12",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
+    "chalk": "^5.1.2",
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.20.0",
     "eslint-config-airbnb": "^19.0.4",

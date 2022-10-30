@@ -10,6 +10,10 @@
     "build-bundle": "rimraf dist && rollup -c --configPlugin typescript",
     "build": "pnpm build-bundle && rimraf dist/types"
   },
+  "files": [
+    "dist",
+    "./index.js"
+  ],
   "dependencies": {},
   "devDependencies": {},
   "keywords": [],

@@ -11,17 +11,21 @@ importers:
       '@rollup/plugin-node-resolve': ^13.3.0
       '@rollup/plugin-typescript': 8.3.3
       '@sppk/vite': workspace:*
+      '@types/fs-extra': ^9.0.13
       '@types/minimist': ^1.2.2
       '@types/node': ^18.11.0
+      '@types/prompts': ^2.4.1
       '@types/semver': ^7.3.12
       '@typescript-eslint/eslint-plugin': ^5.30.6
       '@typescript-eslint/parser': ^5.30.6
+      chalk: ^5.1.2
       conventional-changelog-cli: ^2.2.2
       eslint: ^8.20.0
       eslint-config-airbnb: ^19.0.4
       eslint-config-prettier: ^8.5.0
       eslint-plugin-import: ^2.26.0
       execa: ^6.1.0
+      fs-extra: ^10.1.0
       lint-staged: ^13.0.3
       minimist: ^1.2.6
       prettier: 2.7.1
@@ -36,6 +40,7 @@ importers:
       typescript: ^4.7.4
       vitest: ^0.24.3
     dependencies:
+      fs-extra: 10.1.0
       prompts: 2.4.2
     devDependencies:
       '@commitlint/cli': 17.1.2
@@ -45,11 +50,14 @@ importers:
       '@rollup/plugin-node-resolve': 13.3.0_rollup@3.2.3
       '@rollup/plugin-typescript': 8.3.3_bvn3ed5hy3sfde644tygjdj4ia
       '@sppk/vite': link:packages/vite
+      '@types/fs-extra': 9.0.13
       '@types/minimist': 1.2.2
       '@types/node': 18.11.2
+      '@types/prompts': 2.4.1
       '@types/semver': 7.3.12
       '@typescript-eslint/eslint-plugin': 5.40.1_ukgdydjtebaxmxfqp5v5ulh64y
       '@typescript-eslint/parser': 5.40.1_z4bbprzjrhnsfa24uvmcbu7f5q
+      chalk: 5.1.2
       conventional-changelog-cli: 2.2.2
       eslint: 8.25.0
       eslint-config-airbnb: 19.0.4_fyln4uq2tv75svthy6prqvt6lm
@@ -520,6 +528,12 @@ packages:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
+  /@types/fs-extra/9.0.13:
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+    dependencies:
+      '@types/node': 18.11.2
+    dev: true
+
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
@@ -546,6 +560,12 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+    dev: true
+
+  /@types/prompts/2.4.1:
+    resolution: {integrity: sha512-1Mqzhzi9W5KlooNE4o0JwSXGUDeQXKldbGn9NO4tpxwZbHXYd+WcKpCksG2lbhH7U9I9LigfsdVsP2QAY0lNPA==}
+    dependencies:
+      '@types/node': 18.11.2
     dev: true
 
   /@types/resolve/1.17.1:
@@ -1049,6 +1069,11 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
+
+  /chalk/5.1.2:
+    resolution: {integrity: sha512-E5CkT4jWURs1Vy5qGJye+XwCkNj7Od3Af7CP6SujMetSMkLs8Do2RWJK5yx1wamHV/op8Rz+9rltjaTQWDnEFQ==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: true
 
   /check-error/1.0.2:
@@ -2116,7 +2141,6 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -2281,7 +2305,6 @@ packages:
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
-    dev: true
 
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
@@ -2625,7 +2648,6 @@ packages:
       universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.10
-    dev: true
 
   /jsonparse/1.3.1:
     resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
@@ -3865,7 +3887,6 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
-    dev: true
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
