@@ -3,7 +3,7 @@ on:
     tags:
       - "v*"
 jobs:
-  cache-and-install:
+  Publish:
     runs-on: ubuntu-latest
 
     steps:
