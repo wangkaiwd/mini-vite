@@ -10,17 +10,17 @@
     "release": "tsx scripts/release.ts",
     "test": "vitest"
   },
-  "lint-staged": {
-    "**/*": [
-      "prettier --cache --write --ignore-unknown"
-    ],
-    "src/**/*.ts": [
-      "eslint --cache --fix"
-    ]
-  },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged",
     "commit-msg": "pnpm exec commitlint --edit ${1}"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --cache --write --ignore-unknown"
+    ],
+    "(scripts|packages)/**/*.ts": [
+      "eslint --cache --fix"
+    ]
   },
   "files": [
     "dist"

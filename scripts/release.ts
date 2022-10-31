@@ -1,15 +1,15 @@
 import path from "node:path";
 import prompts, { PromptObject } from "prompts";
 import { inc, ReleaseType } from "semver";
+import chalk from "chalk";
 import {
+  __dirname,
   bumpPkgsVersion,
   getPkgsInfo,
+  NPM_REGISTRY,
   run,
   step,
-  __dirname,
-  NPM_REGISTRY,
 } from "./utils";
-import chalk from "chalk";
 
 const { version: targetVersion, pkgFilenames } = getPkgsInfo();
 
@@ -27,7 +27,6 @@ const generateChangelog = async () => {
     "-i",
     "CHANGELOG.md",
     "-s",
-    "",
   ];
   await run("npx", changelogArgs, { cwd: path.resolve(__dirname, "..") });
 };
@@ -41,13 +40,13 @@ const isGitClean = async () => {
 
 const commitChanges = async (incVersion: string) => {
   await run("git", ["add", "."]);
-  await run("git", ["commit", "-m", `chore(release): release ${incVersion}`]);
-  await run("git", ["tag", `${incVersion}`]);
+  await run("git", ["commit", "-m", `chore(release): release v${incVersion}`]);
+  await run("git", ["tag", `v${incVersion}`]);
 };
 
 const pushWithTag = async (incVersion: string) => {
   await run("git", ["push"]);
-  await run("git", ["push", "origin", incVersion]);
+  await run("git", ["push", "origin", `v${incVersion}`]);
 };
 
 const publishPackage = async (incVersion: string, cwd: string) => {
@@ -57,7 +56,13 @@ const publishPackage = async (incVersion: string, cwd: string) => {
   } else if (incVersion.includes("beta")) {
     publishTag = "beta";
   }
-  const publishArgs = ["publish", "--registry", NPM_REGISTRY, "public", ""];
+  const publishArgs = [
+    "publish",
+    "--registry",
+    NPM_REGISTRY,
+    "--access",
+    "public",
+  ];
   if (publishTag) {
     publishArgs.push("--tag", publishTag);
   }
@@ -67,6 +72,7 @@ const publishPackage = async (incVersion: string, cwd: string) => {
 const main = async () => {
   step("\nDetect changes ..");
   await isGitClean();
+
   const question: PromptObject = {
     type: "select",
     name: "releaseType",
@@ -85,9 +91,8 @@ const main = async () => {
     message: `New version is ${incVersion}, continue ?`,
     initial: false,
   });
-  if (!confirm) {
-    return;
-  }
+  if (!confirm) return;
+
   step("\nBump packages version ...");
   await bumpPkgsVersionWithInfo(incVersion);
 
@@ -100,8 +105,10 @@ const main = async () => {
   step("\nPush to remote ...");
   await pushWithTag(incVersion);
 
-  step("\nPublishing packages ...");
+  step("\n building ...");
   await run("pnpm", ["build"]);
+
+  step("\nPublishing packages ...");
   pkgFilenames.forEach((filename) => {
     publishPackage(incVersion, filename);
   });
