@@ -1,3 +1,12 @@
+# [](https://github.com/wangkaiwd/mini-vite/compare/v0.0.2...v) (2022-10-31)
+
+
+### Features
+
+* publish to npm with github action ([78c5083](https://github.com/wangkaiwd/mini-vite/commit/78c508357e7443e59fa9d889a85161bd56861afe))
+
+
+
 # [](https://github.com/wangkaiwd/mini-vite/compare/v0.0.1...v) (2022-10-31)
 
 
