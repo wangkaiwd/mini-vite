@@ -5,7 +5,9 @@ import { execa, Options } from "execa";
 import fse from "fs-extra";
 import chalk from "chalk";
 
-const PKG_JSON = "package.json";
+export const PKG_JSON = "package.json";
+export const NPM_REGISTRY = "https://registry.npmjs.org/";
+export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const getPkgsInfo = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -25,7 +27,7 @@ export const getPkgsInfo = () => {
   };
 };
 
-export const run = (cmd: string, args: string[], options: Options) =>
+export const run = (cmd: string, args: string[], options: Options = {}) =>
   execa(cmd, args, { stdio: "inherit", ...options });
 
 export const bumpPkgsVersion = async (incVersion: string) => {
