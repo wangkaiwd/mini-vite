@@ -2,16 +2,9 @@ import path from "node:path";
 import prompts, { PromptObject } from "prompts";
 import { inc, ReleaseType } from "semver";
 import chalk from "chalk";
-import {
-  __dirname,
-  bumpPkgsVersion,
-  getPkgsInfo,
-  NPM_REGISTRY,
-  run,
-  step,
-} from "./utils";
+import { __dirname, bumpPkgsVersion, getPkgsInfo, run, step } from "./utils";
 
-const { version: targetVersion, pkgFilenames } = getPkgsInfo();
+const { version: targetVersion } = getPkgsInfo();
 
 const increments: ReleaseType[] = ["major", "minor", "patch"];
 
@@ -51,26 +44,6 @@ const pushWithTag = async (incVersion: string) => {
   await run("git", ["push", "origin", `v${incVersion}`]);
 };
 
-const publishPackage = async (incVersion: string, cwd: string) => {
-  let publishTag;
-  if (incVersion.includes("alpha")) {
-    publishTag = "alpha";
-  } else if (incVersion.includes("beta")) {
-    publishTag = "beta";
-  }
-  const publishArgs = [
-    "publish",
-    "--registry",
-    NPM_REGISTRY,
-    "--access",
-    "public",
-  ];
-  if (publishTag) {
-    publishArgs.push("--tag", publishTag);
-  }
-  await run("npm", publishArgs, { cwd });
-};
-
 const main = async () => {
   step("\nDetect changes ..");
   await isGitClean();
@@ -106,14 +79,6 @@ const main = async () => {
 
   step("\nPush to remote ...");
   await pushWithTag(incVersion);
-
-  step("\n building ...");
-  await run("pnpm", ["build"]);
-
-  step("\nPublishing packages ...");
-  pkgFilenames.forEach((filename) => {
-    publishPackage(incVersion, filename);
-  });
 };
 
 main().catch((err) => {

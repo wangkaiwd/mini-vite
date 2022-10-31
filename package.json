@@ -8,7 +8,8 @@
     "dev": "pnpm -F './packages/*' dev",
     "build": "pnpm -F './packages/*' build",
     "release": "tsx scripts/release.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "publish": "tsx scripts/publish.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged",

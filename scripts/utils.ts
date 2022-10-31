@@ -4,11 +4,13 @@ import fs from "node:fs";
 import { execa, Options } from "execa";
 import fse from "fs-extra";
 import chalk from "chalk";
+import minimist from "minimist";
 
 export const PKG_JSON = "package.json";
 export const NPM_REGISTRY = "https://registry.npmjs.org/";
 export const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+export const args = minimist(process.argv.slice(2));
 export const getPkgsInfo = () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const pkgDir = path.resolve(__dirname, "../packages");
