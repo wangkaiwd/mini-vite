@@ -27,6 +27,8 @@ const generateChangelog = async () => {
     "-i",
     "CHANGELOG.md",
     "-s",
+    "--commit-path",
+    ".",
   ];
   await run("npx", changelogArgs, { cwd: path.resolve(__dirname, "..") });
 };
