@@ -34,7 +34,9 @@ export const run = (cmd: string, args: string[], options: Options = {}) =>
 
 export const bumpPkgsVersion = async (incVersion: string) => {
   const { pkgFilenames } = getPkgsInfo();
-  const promises = pkgFilenames.map(async (filename) => {
+  const rootPkgFilename = path.resolve(__dirname, "../");
+  const allPkgFilenames = [rootPkgFilename, ...pkgFilenames];
+  const promises = allPkgFilenames.map(async (filename) => {
     const pkgJsonFilename = path.resolve(filename, PKG_JSON);
     const pkgJson = await fse.readJson(pkgJsonFilename);
     pkgJson.version = incVersion;
