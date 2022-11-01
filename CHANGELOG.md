@@ -1,3 +1,13 @@
+# [](https://github.com/wangkaiwd/mini-vite/compare/v0.0.3...v) (2022-11-01)
+
+
+### Features
+
+* rename publish script ([c960f8f](https://github.com/wangkaiwd/mini-vite/commit/c960f8f8133c537a955fa2b9879500b6dba1dd5f))
+* update publish action ([87054cc](https://github.com/wangkaiwd/mini-vite/commit/87054cc366f77872a221d2da2c42ce8107f7d991))
+
+
+
 # [](https://github.com/wangkaiwd/mini-vite/compare/v0.0.2...v) (2022-10-31)
 
 
