@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/wangkaiwd/mini-vite/compare/v0.0.4...v0.0.5) (2022-11-01)
+
+
+### Features
+
+* refactor changelog file ([62742e7](https://github.com/wangkaiwd/mini-vite/commit/62742e7b06516d8f9b3b23c443f30d9c177cca4a))
+
+
+
 ## [0.0.4](https://github.com/wangkaiwd/mini-vite/compare/v0.0.3...v0.0.4) (2022-11-01)
 
 

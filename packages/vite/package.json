@@ -1,6 +1,6 @@
 {
   "name": "@sppk/vite",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "dev": "pnpm build-bundle -w",
     "build-bundle": "rimraf dist && rollup -c --configPlugin typescript",
