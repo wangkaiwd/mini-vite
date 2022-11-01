@@ -9,7 +9,7 @@
     "build": "pnpm -F './packages/*' build",
     "release": "tsx scripts/release.ts",
     "test": "vitest",
-    "publish": "tsx scripts/publish.ts"
+    "publish-ci": "tsx scripts/publishCI.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged",

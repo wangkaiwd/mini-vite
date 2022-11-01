@@ -44,6 +44,6 @@ jobs:
         run: pnpm build
       # https://dev.to/astagi/publish-to-npm-using-github-actions-23fn
       - name: Publish packages
-        run: pnpm publish ${{  github.ref_name }}
+        run: pnpm publish-ci ${{  github.ref_name }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
