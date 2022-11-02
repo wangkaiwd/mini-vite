@@ -1,3 +1,12 @@
+## [0.0.6-beta.1](https://github.com/wangkaiwd/mini-vite/compare/v0.0.5...v0.0.6-beta.1) (2022-11-02)
+
+
+### Features
+
+* support prerelease version ([583aab6](https://github.com/wangkaiwd/mini-vite/commit/583aab6e0f0a62b82d2236267fa692996e35aafa))
+
+
+
 ## [0.0.5](https://github.com/wangkaiwd/mini-vite/compare/v0.0.4...v0.0.5) (2022-11-01)
 
 
