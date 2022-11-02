@@ -13,7 +13,7 @@ import {
 } from "./utils";
 
 const { version: targetVersion } = getPkgsInfo();
-const preid = semver.prerelease(targetVersion)?.[0];
+const preid = semver.prerelease(targetVersion)?.[0] as string | undefined;
 
 const createIncrements = () => {
   const increments: string[] = ["major", "minor", "patch"];
@@ -107,6 +107,12 @@ const main = async () => {
 
   step("\nPush to remote ...");
   await pushWithTag(incVersion);
+
+  console.log(
+    chalk.green(
+      "Push successfully, publish will start shortly by ci. \nhttps://github.com/wangkaiwd/mini-vite/blob/main/.github/workflows/publish.yaml"
+    )
+  );
 };
 
 main().catch((err) => {
