@@ -5,6 +5,7 @@ import { execa, Options } from "execa";
 import fse from "fs-extra";
 import chalk from "chalk";
 import minimist from "minimist";
+import semver from "semver/preload";
 
 export const PKG_JSON = "package.json";
 export const NPM_REGISTRY = "https://registry.npmjs.org/";
@@ -47,5 +48,8 @@ export const bumpPkgsVersion = async (incVersion: string) => {
   });
   return Promise.all(promises);
 };
+
+export const validVersion = (newVersion: string, targetVersion: string) =>
+  semver.valid(newVersion) && semver.gt(newVersion, targetVersion);
 
 export const step = (message: string) => console.log(chalk.cyan(message));

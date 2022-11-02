@@ -1,12 +1,29 @@
 import path from "node:path";
-import prompts, { PromptObject } from "prompts";
+import prompts, { Choice, PromptObject } from "prompts";
 import { inc, ReleaseType } from "semver";
 import chalk from "chalk";
-import { __dirname, bumpPkgsVersion, getPkgsInfo, run, step } from "./utils";
+import semver from "semver/preload";
+import {
+  __dirname,
+  bumpPkgsVersion,
+  getPkgsInfo,
+  run,
+  step,
+  validVersion,
+} from "./utils";
 
 const { version: targetVersion } = getPkgsInfo();
+const preid = semver.prerelease(targetVersion)?.[0];
 
-const increments: ReleaseType[] = ["major", "minor", "patch"];
+const createIncrements = () => {
+  const increments: string[] = ["major", "minor", "patch"];
+  if (preid) {
+    increments.push("premajor", "preminor", "prepatch", "prerelease");
+  }
+  return increments;
+};
+
+const increments = createIncrements();
 
 const bumpPkgsVersionWithInfo = async (incVersion: string) => {
   await bumpPkgsVersion(incVersion);
@@ -45,19 +62,32 @@ const pushWithTag = async (incVersion: string) => {
 const main = async () => {
   step("\nDetect changes ..");
   await isGitClean();
-
+  const choices: Choice[] = increments.map((item) => ({
+    title: item,
+    value: item,
+    description: inc(targetVersion, item as ReleaseType, preid)!,
+  }));
+  choices.push({ title: "custom", value: "custom" });
   const question: PromptObject = {
     type: "select",
     name: "releaseType",
     message: "Pick a new version",
-    choices: increments.map((item) => ({
-      title: item,
-      value: item,
-      description: inc(targetVersion, item)!,
-    })),
+    choices,
   };
   const { releaseType } = await prompts(question);
-  const incVersion = inc(targetVersion, releaseType)!;
+  let inputVersion;
+  if (releaseType === "custom") {
+    const result = await prompts({
+      type: "text",
+      name: "inputVersion",
+      message: "Please input new version",
+    });
+    inputVersion = result.inputVersion;
+    if (!validVersion(inputVersion, targetVersion)) {
+      throw Error(`${inputVersion} is not a semantic version`);
+    }
+  }
+  const incVersion = inputVersion ?? inc(targetVersion, releaseType, preid)!;
   const { confirm } = await prompts({
     type: "confirm",
     name: "confirm",
