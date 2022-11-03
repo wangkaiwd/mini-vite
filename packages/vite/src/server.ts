@@ -1,5 +1,6 @@
 import http from "node:http";
 import chalk from "chalk";
+import pkg from "../package.json";
 
 const defaultPort = 5173;
 
@@ -8,11 +9,16 @@ export interface ServerOptions {
   port?: string | number;
 }
 
+const defaultOptions: Required<ServerOptions> = {
+  port: 5173,
+  host: false,
+};
+
 export class Server {
-  private options: ServerOptions;
+  private options: Required<ServerOptions>;
 
   constructor(options: ServerOptions) {
-    this.options = options;
+    this.options = Object.assign(defaultOptions, options);
   }
 
   createServer() {
@@ -26,7 +32,8 @@ export class Server {
     });
 
     server.listen(this.options.port ?? defaultPort, () => {
-      console.log(chalk.dim(`-> Local: http://localhost:${this.options.port}`));
+      console.log(`${chalk.green(`SVITE v${pkg.version}`)}  ready for `);
+      console.log(`-> Local:   http://localhost:${this.options.port}`);
     });
     return server;
   }

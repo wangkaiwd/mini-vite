@@ -41,7 +41,10 @@ export default (commandArgs: any): RollupOptions[] => {
       external,
       output: createOutput(isDev),
       plugins: [
-        nodeResolve(),
+        // https://github.com/SBoudrias/Inquirer.js/issues/1153#issuecomment-1212827810
+        nodeResolve({
+          exportConditions: ["node"],
+        }),
         commonjs(),
         json(),
         typescript({
