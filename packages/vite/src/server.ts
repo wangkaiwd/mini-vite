@@ -5,6 +5,7 @@ import mime from "mime-types";
 import fs from "node:fs/promises";
 import process from "node:process";
 import pkg from "../package.json";
+import { clearScreen } from "./utils";
 
 const defaultPort = 5173;
 
@@ -59,12 +60,19 @@ export class Server {
 
     server.listen(this.options.port ?? defaultPort, () => {
       const interval = Date.now() - global.start;
+      clearScreen();
       console.log(
-        `${chalk.green(`SVITE v${pkg.version}`)}  ready for ${chalk.cyan(
-          `${interval}ms`
-        )}`
+        `${chalk.green(`${chalk.bold("SVITE")} v${pkg.version}`)}  ${chalk.dim(
+          `ready in ${chalk.reset(chalk.bold(interval))}`
+        )} ms\n`
       );
-      console.log(`-> Local:   http://localhost:${this.options.port}`);
+      console.log(
+        chalk.cyan(
+          ` ${chalk.green("➜")}  ${chalk.bold(
+            "Local"
+          )}: http://localhost:${chalk.bold(this.options.port)}`
+        )
+      );
     });
     return server;
   };
