@@ -2,8 +2,9 @@ import http from "node:http";
 import chalk from "chalk";
 import path from "node:path";
 import mime from "mime-types";
-import fs from "node:fs/promises";
+import fsp from "node:fs/promises";
 import process from "node:process";
+import fs from "node:fs";
 import pkg from "../package.json";
 import { clearScreen } from "./utils";
 
@@ -28,6 +29,20 @@ export class Server {
     this.options = Object.assign(defaultOptions, options);
   }
 
+  resolveUserConfig = async () => {
+    const possibleFilename = ["svite.config.ts", "svite.config.js"];
+    let configFilename!: string;
+    for (let i = 0; i < possibleFilename.length; i++) {
+      const filename = possibleFilename[i];
+      const absFilename = path.resolve(process.cwd(), filename);
+      if (fs.existsSync(absFilename)) {
+        configFilename = absFilename;
+        break;
+      }
+    }
+    return import(configFilename);
+  };
+
   createServer = () => {
     const server = http.createServer(async (req, res) => {
       const { url } = req;
@@ -50,7 +65,7 @@ export class Server {
       }
       let source;
       try {
-        source = await fs.readFile(path.join(process.cwd(), formattedUrl));
+        source = await fsp.readFile(path.join(process.cwd(), formattedUrl));
         res.setHeader("Content-Type", mimeType);
         res.end(source);
       } catch (e) {
