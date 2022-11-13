@@ -5,6 +5,7 @@ import mime from "mime-types";
 import fsp from "node:fs/promises";
 import process from "node:process";
 import fs from "node:fs";
+import esbuild from "esbuild";
 import pkg from "../package.json";
 import { clearScreen } from "./utils";
 
@@ -22,6 +23,29 @@ const defaultOptions: Required<ServerOptions> = {
 
 // fixme: 1. read large file ?  2. cache resource
 
+const bundleConfigFile = async (filename: string) => {
+  const entry = path.basename(filename);
+  const tempFilename = `${Date.now()}_${entry}`;
+  const buildResult = await esbuild.build({
+    entryPoints: [entry],
+    write: false,
+    outfile: tempFilename,
+  });
+  return { code: buildResult.outputFiles[0].text };
+};
+
+const loadConfigFromBundledFile = async (
+  filename: string,
+  bundledCode: string
+) => {
+  const fileBase = `${filename}_${Date.now()}`;
+  const fileTmp = `${fileBase}.mjs`;
+  await fsp.writeFile(fileTmp, bundledCode);
+  const userConfig: ServerOptions = (await import(fileTmp)).default;
+  fs.unlinkSync(fileTmp);
+  return userConfig;
+};
+
 // config source: 1. default config 2. command line config 3. user config file
 export const resolveUserConfig = async () => {
   const possibleFilename = ["svite.config.ts", "svite.config.js"];
@@ -34,11 +58,13 @@ export const resolveUserConfig = async () => {
       break;
     }
   }
-  return import(configFilename);
+  const bundled = await bundleConfigFile(configFilename);
+  return loadConfigFromBundledFile(configFilename, bundled.code);
 };
 
 const createServer = async (options: ServerOptions) => {
-  const mergedOptions = Object.assign(defaultOptions, options);
+  const userConfig = await resolveUserConfig();
+  options = Object.assign(defaultOptions, options, userConfig);
   const server = http.createServer(async (req, res) => {
     const { url } = req;
     const formattedUrl = url === "/" ? "/index.html" : url;
@@ -68,7 +94,7 @@ const createServer = async (options: ServerOptions) => {
     }
   });
 
-  server.listen(mergedOptions.port ?? defaultPort, () => {
+  server.listen(options.port ?? defaultPort, () => {
     const interval = Date.now() - global.start;
     clearScreen();
     console.log(
@@ -80,7 +106,7 @@ const createServer = async (options: ServerOptions) => {
       chalk.cyan(
         `   ${chalk.green("➜")}  ${chalk.bold(
           "Local"
-        )}: http://localhost:${chalk.bold(mergedOptions.port)}`
+        )}: http://localhost:${chalk.bold(options.port)}`
       )
     );
   });
