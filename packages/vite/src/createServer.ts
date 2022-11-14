@@ -7,7 +7,7 @@ import process from "node:process";
 import fs from "node:fs";
 import esbuild from "esbuild";
 import pkg from "../package.json";
-import { clearScreen } from "./utils";
+import { clearScreen, getIPAddress } from "./utils";
 
 const defaultPort = 5173;
 
@@ -109,6 +109,16 @@ const createServer = async (options: ServerOptions) => {
         )}: http://localhost:${chalk.bold(options.port)}`
       )
     );
+    if (options.host) {
+      const ip = getIPAddress();
+      console.log(
+        chalk.cyan(
+          `   ${chalk.green("➜")}  ${chalk.bold(
+            "Network"
+          )}: http://${ip}:${chalk.bold(options.port)}`
+        )
+      );
+    }
   });
   return server;
 };
