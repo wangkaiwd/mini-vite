@@ -21,8 +21,6 @@ const defaultOptions: Required<ServerOptions> = {
   host: true,
 };
 
-// fixme: 1. read large file ?  2. cache resource
-
 const bundleConfigFile = async (filename: string) => {
   const entry = path.basename(filename);
   const tempFilename = `${Date.now()}_${entry}`;
@@ -62,6 +60,7 @@ export const resolveUserConfig = async () => {
   return loadConfigFromBundledFile(configFilename, bundled.code);
 };
 
+// fixme: 1. read large file ?  2. cache resource
 const createServer = async (options: ServerOptions) => {
   const userConfig = await resolveUserConfig();
   options = Object.assign(defaultOptions, options, userConfig);
@@ -94,9 +93,8 @@ const createServer = async (options: ServerOptions) => {
     }
   });
 
-  server.listen(options.port ?? defaultPort, () => {
+  const printUrls = () => {
     const interval = Date.now() - global.start;
-    clearScreen();
     console.log(
       `   ${chalk.green(`${chalk.bold("SVITE")} v${pkg.version}`)}  ${chalk.dim(
         `ready in ${chalk.reset(chalk.bold(interval))}`
@@ -119,6 +117,11 @@ const createServer = async (options: ServerOptions) => {
         )
       );
     }
+  };
+
+  server.listen(options.port ?? defaultPort, () => {
+    clearScreen();
+    printUrls();
   });
   return server;
 };

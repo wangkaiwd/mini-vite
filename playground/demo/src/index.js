@@ -1,1 +1,3 @@
-console.log("index.js");
+import dayjs from "dayjs";
+
+console.log("dayjs", dayjs);
